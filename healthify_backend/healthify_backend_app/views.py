@@ -1,15 +1,12 @@
-#from django.shortcuts import render
 # healthify_backend_app/views.py
-# views.py
 
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from rest_framework import generics
 from .models import FoodItem, HealthifiedOption
 from .serializers import FoodItemSerializer, HealthifiedOptionSerializer
-from django.http import JsonResponse
 from .openai_integration import openai_request
-from django.http import JsonResponse
-from .openai_integration import call_palm_api
+from .palm_integration import call_palm_api  # Import your PaLM integration function
+
 class FoodItemList(generics.ListCreateAPIView):
     queryset = FoodItem.objects.all()
     serializer_class = FoodItemSerializer
@@ -17,8 +14,6 @@ class FoodItemList(generics.ListCreateAPIView):
 class HealthifiedOptionList(generics.ListCreateAPIView):
     queryset = HealthifiedOption.objects.all()
     serializer_class = HealthifiedOptionSerializer
-    
-
 
 def home(request):
     return HttpResponse("Welcome to Healthify App")
@@ -30,8 +25,6 @@ def openai_view(request):
         return JsonResponse(response, safe=False)
     else:
         return JsonResponse({"message": "Method not allowed"}, status=405)
-    
-
 
 def healthify_view(request):
     if request.method == 'POST':
@@ -45,4 +38,3 @@ def healthify_view(request):
         return JsonResponse({'result': result})
 
     return JsonResponse({'error': 'Invalid request'}, status=400)
-
