@@ -19,7 +19,8 @@ from django.urls import path,include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('healthify_backend_app/', include('healthify_backend_app.urls')),  
+    path('healthify_backend_app/', include('healthify_backend_app.urls')), 
+     
 
 ]
 

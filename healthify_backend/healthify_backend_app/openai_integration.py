@@ -2,6 +2,9 @@
 
 import requests
 
+import vertexai
+from vertexai.language_models import TextGenerationModel
+
 def openai_request():
     api_url = "https://api.openai.com/v1/chat/completions"
     headers = {
@@ -15,3 +18,22 @@ def openai_request():
     }
     response = requests.post(api_url, json=data, headers=headers)
     return response.json()
+
+
+vertexai.init(project="aerial-anagram-402721", location="us-central1")
+
+def call_palm_api(food_item, diet_type):
+    parameters = {
+        "candidate_count": 1,
+        "max_output_tokens": 1024,
+        "temperature": 0.2,
+        "top_p": 0.8,
+        "top_k": 40,
+    }
+    model = TextGenerationModel.from_pretrained("text-bison")
+
+    # Modify the input text to include the user's food_item and diet_type
+    input_text = f"I am a healthy food enthusiast but I do not know how to make healthy food choice while cooking. I want to make a {food_item}. The ingredients of {food_item}... Your diet is {diet_type}."
+
+    response = model.predict(input_text, **parameters)
+    return response.text
