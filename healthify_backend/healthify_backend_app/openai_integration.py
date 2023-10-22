@@ -10,7 +10,7 @@ def openai_request():
     }
     data = {
         "model": "gpt-3.5-turbo",
-        "messages": [{"role": "user", "content": "Assume you are a chef who suggests healthy recipes along with its calorie count from the given ingredients"}],
+        "messages": [{"role": "user", "content": "Assume you are a health concious individual who suggests healthy recipes along with its calorie count of each ingredient from the given ingredients"}],
         "temperature": 0.7
     }
     response = requests.post(api_url, json=data, headers=headers)
